@@ -1,37 +1,20 @@
-const express = require('express');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-
-const app = express();
-
-// Configuration de la stratégie d'authentification locale
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    // Vérification de l'utilisateur et du mot de passe dans la base de données
-    User.findOne({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Nom d\'utilisateur incorrect.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Mot de passe incorrect.' });
-      }
-      return done(null, user);
+const  JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const  options = { }
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = 'secret';
+opts.issuer = 'accounts.examplesoft.com';
+opts.audience = 'yoursite.net';
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    User.findOne({id: jwt_payload.sub}, function(err, user) {
+        if (err) {
+            return done(err, false);
+        }
+        if (user) {
+            return done(null, user);
+        } else {
+            return done(null, false);
+            // or you could create a new account
+        }
     });
-  }
-));
-
-// Configuration de la sérialisation et de la désérialisation de la session
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-// Middleware d'initialisation de Passport
-app.use(passport.initialize());
-app.use(passport.session());
+}));

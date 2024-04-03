@@ -24,10 +24,26 @@ model User {
 model Presence {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  location  String
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
+  locationId  Int 
+  location  Location @relation(fields: [locationId], references: [id])
+ 
 }
+
+// schema.prisma
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  presence Presence[]
+}
+
+
+
 
 enum Role {
   ADMIN

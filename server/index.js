@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // });
 
 app.use("/", userRouter);
-// app.use("/", presenceRouter);
+app.use("/", presenceRouter);
 
 
 
