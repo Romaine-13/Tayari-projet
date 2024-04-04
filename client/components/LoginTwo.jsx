@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TextInput, Alert, StyleSheet } from 'react-native';
+import { View, Text, Image, TextInput, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import logo from '../assets/logo.png';
 import Bouton from './Bouton';
+// import { createUser } from './services/userService'; 
 
-export default function Login({ navigation }) {
+export default function LoginTwo({ navigation }) {
+    const [nom, setNom] = useState('');
+    const [postnom, setPostnom] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+    const [gender, setGender] = useState('');
+    const [matricule, setMatricule] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handlePress = () => {
-        const emailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/i;
-        const isValidEmail = emailReg.test(email);
-        const passwordReg = /([0-9]{6,8})/;
-        const isValidPassword = passwordReg.test(password);
+    const handlePress = async () => {
+        try {
+            // Vérifiez si les champs obligatoires sont remplis
+            if (!nom || !postnom || !email || !password) {
+                Alert.alert('Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+            // Créez un objet userData avec les données de l'utilisateur
+            const userData = { nom, postnom, imageUrl, gender, matricule, email, password };
+            await createUser(userData);
 
-        if (isValidEmail && isValidPassword) {
+            // Redirigez l'utilisateur vers la page suivante (par exemple, la page de pointage)
+            Alert.alert('WELCOME HOME');
             navigation.navigate('Pointage');
-        } else {
-            Alert.alert('Email or password is invalid');
+        } catch (error) {
+            console.error('Error creating user:', error);
+            Alert.alert('Une erreur est survenue lors de la création de l\'utilisateur');
         }
     };
 
@@ -24,6 +37,36 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             <Image style={styles.logo} source={logo} />
             <View>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nom"
+                    value={nom}
+                    onChangeText={setNom}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Postnom"
+                    value={postnom}
+                    onChangeText={setPostnom}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Image URL"
+                    value={imageUrl}
+                    onChangeText={setImageUrl}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Genre"
+                    value={gender}
+                    onChangeText={setGender}
+                />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Matricule"
+                    value={matricule}
+                    onChangeText={setMatricule}
+                />
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
@@ -38,8 +81,8 @@ export default function Login({ navigation }) {
                     secureTextEntry={true}
                 />
             </View>
-            <Bouton name='se connecter' onPress={handlePress} />
-            <Text style={styles.forgotPassword} onPress={() => navigation.navigate('Pointage')}>Mot de passe oublié</Text>
+            <Bouton name="S\ 'inscrire" onPress={handlePress} />
+            
         </View>
     );
 }
@@ -57,10 +100,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     input: {
-        borderWidth: 1,
-        borderColor: 'black',
-        width: '70%',
         height: 40,
+        width:200,
+        borderColor: 'gray',
+        borderWidth: 1,
         marginBottom: 10,
         paddingHorizontal: 10,
     },

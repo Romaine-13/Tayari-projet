@@ -126,11 +126,19 @@ const loginUser = async (req, res) => {
     return res.status(401).json({ error: 'Mot de passe incorrect.' });
   }
   
-    const redirectUrl = '/location/'; // L'URL vers laquelle vous souhaitez rediriger l'utilisateur
+    const redirectUrl = '/location'
     res.status(200).json({ message: 'Connexion réussie.', token: token,redirectUrl });
    
   };
  
+  const modifyUser = async(userId,data)=>{
+    return await prisma.user.update({
+      where: { 
+        id: userId
+      },
+      data:data
+  })
+  }
 
 
 

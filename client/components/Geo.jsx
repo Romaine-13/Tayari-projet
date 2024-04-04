@@ -26,18 +26,27 @@ export default function Geo() {
                 setAddress(geocode[0].name);
             }
 
-            // Set current date and time
-            const date = new Date();
-            setCurrentDate(date.toLocaleString());
+            
         })();
     }, []);
 
     return (
-        <View>
+        <View style={styles.buttonText}>
             <Text >Latitude: {location ? location.coords.latitude : 'Loading...'}</Text>
             <Text >Longitude: {location ? location.coords.longitude : 'Loading...'}</Text>
             <Text >Adresse: {address || 'Loading...'}</Text>
-            <Text  >Date et heure actuelles: {currentDate || 'Loading...'}</Text>
+        
         </View>
     );
+
+
+
 }
+const styles = StyleSheet.create({
+    buttonText: {
+        color: '#484E58',
+        marginLeft: 6,
+        fontSize: 20,
+        marginTop: 10,
+    },
+});

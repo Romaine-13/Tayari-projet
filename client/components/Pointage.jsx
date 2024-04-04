@@ -13,35 +13,42 @@ export default function Pointage() {
     const [isPress, setIsPress] = useState(false);
 
     const handlePress = (navigation) => {
-        navigation.navigate('Profil')
 
+     
+        navigation.navigate('Profil')
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.text}>
                 <View>
-                <Text style={styles.text}>Heure: {new Date().toLocaleTimeString()}</Text>
-                <Text style={styles.text}>Horaire du jour || 08H00 - 15H30</Text>
+                    <Text style={styles.text}>Heure: {new Date().toLocaleTimeString()}</Text>
+                    <Text style={styles.text}>Horaire du jour || 08H00 - 15H30</Text>
+                    <Profil/>
                 </View>
-                
-                <View><Profil/></View>
+
+                <View><Profil /></View>
 
             </View>
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={() => setIsPress(true)} style={styles.button}>
                     <Image source={entre} style={styles.image} />
-                    <Text style={styles.buttonText}>Heure d'arrivée</Text>
+                    <Text style={styles.buttonText}> Entre</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setIsPress(false)} style={styles.button}>
                     <Image source={sortie} style={styles.image} />
+                    <Text style={styles.buttonText}> Sortie</Text>
+
                 </TouchableOpacity>
             </View>
             <View style={styles.buttonText}>
                 {isPress ?
-                    <Text style={styles.buttonText}>Heure d'arrivée</Text> && <Geo /> :
-                    <Text style={styles.buttonText}>Heure de sortie</Text>}
+                    <Text style={styles.buttonText}>Heure d'arrivée : {new Date().toLocaleTimeString()} </Text>
+                    :
+                    <Text style={styles.buttonText}>Heure de sortie : {new Date().toLocaleTimeString()} </Text>
+                }
+                <Geo />
             </View>
         </View>
     );
@@ -55,27 +62,30 @@ const styles = StyleSheet.create({
         height: 100,
     },
     text: {
-        
-            "flexDirection": "row",
-            "backgroundColor": "#63b3ed",
-            "color": "#484E58",
-            "marginLeft": 6,
-            "marginBottom": 2,
-            "padding": 10,
-            "borderRadius": 20
-          
+
+        flexDirection: "row",
+        backgroundColor: "#63b3ed",
+        color: "#484E58",
+        marginLeft: 6,
+        marginBottom: 2,
+        padding: 10,
+        paddingTop:15,
+        marginTop:10,
+        borderRadius: 15,
+        fontSize:20,
+
     },
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 4,
+        marginTop: 30,
         marginLeft: 6,
     },
     button: {
         // flexDirection: 'row',
         alignItems: 'center',
         // borderWidth: 2,
-        padding: 6,
+        padding: 10,
     },
     image: {
         width: 100,
@@ -84,16 +94,16 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#484E58',
         marginLeft: 6,
-        fontSize: 18,
-        marginTop: 3,
+        fontSize: 20,
+        marginTop: 10,
     },
     UserAvatar: {
         width: 30,
         borderRadius: 50,
-        marginTop:10,
-        marginLeft:15,
-      
-        
+        marginTop: 10,
+        marginLeft: 15,
+
+
     },
 });
 
