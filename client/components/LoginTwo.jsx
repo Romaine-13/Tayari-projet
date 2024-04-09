@@ -2,29 +2,34 @@ import React, { useState } from 'react';
 import { View, Text, Image, TextInput, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import logo from '../assets/logo.png';
 import Bouton from './Bouton';
+import Pointage  from './Pointage'
+import axios from 'axios';
 // import { createUser } from './services/userService'; 
 
 export default function LoginTwo({ navigation }) {
     const [nom, setNom] = useState('');
     const [postnom, setPostnom] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [gender, setGender] = useState('');
     const [matricule, setMatricule] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [gender, setGender] = useState(''); 
 
     const handlePress = async () => {
         try {
             // Vérifiez si les champs obligatoires sont remplis
-            if (!nom || !postnom || !email || !password) {
+            if (!nom || !postnom ||!matricule|| !email || !password) {
+               
                 Alert.alert('Veuillez remplir tous les champs obligatoires');
                 return;
             }
+    
             // Créez un objet userData avec les données de l'utilisateur
-            const userData = { nom, postnom, imageUrl, gender, matricule, email, password };
-            await createUser(userData);
-
-            // Redirigez l'utilisateur vers la page suivante (par exemple, la page de pointage)
+            const userData = { nom, postnom,gender, matricule, email, password };
+            console.log('postnom');
+            // Envoyez les données à votre serveur en utilisant Axios
+            const response = await axios.post('http://192.168.60.211:8001/user/', userData);
+    
+            // Redirigez l'utilisateur vers la page suivante (la page de pointage)
             Alert.alert('WELCOME HOME');
             navigation.navigate('Pointage');
         } catch (error) {
@@ -32,6 +37,8 @@ export default function LoginTwo({ navigation }) {
             Alert.alert('Une erreur est survenue lors de la création de l\'utilisateur');
         }
     };
+    
+ 
 
     return (
         <View style={styles.container}>
@@ -49,12 +56,7 @@ export default function LoginTwo({ navigation }) {
                     value={postnom}
                     onChangeText={setPostnom}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Image URL"
-                    value={imageUrl}
-                    onChangeText={setImageUrl}
-                />
+              
                 <TextInput
                     style={styles.input}
                     placeholder="Genre"
@@ -81,8 +83,7 @@ export default function LoginTwo({ navigation }) {
                     secureTextEntry={true}
                 />
             </View>
-            <Bouton name="S\ 'inscrire" onPress={handlePress} />
-            
+            <Bouton name="S'inscrire" onPress={handlePress} />
         </View>
     );
 }

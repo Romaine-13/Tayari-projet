@@ -10,40 +10,33 @@ datasource db {
 model User {
   id        Int        @id @default(autoincrement())
   name      String
-  postnom   String
   imageUrl  String?
   gender    String
   matricule String     @unique
   role      Role
   email     String     @unique
   password  String
-  presence Presence[]
- 
+  postnom   String
+  presence  Presence[]
 }
 
 model Presence {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  locationId  Int 
-  location  Location @relation(fields: [locationId], references: [id])
- 
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  userId     Int
+  locationId Int
+  location   Location @relation(fields: [locationId], references: [id])
+  user       User     @relation(fields: [userId], references: [id])
 }
-
-// schema.prisma
 
 model Location {
-  id        Int      @id @default(autoincrement())
+  id        Int        @id @default(autoincrement())
   latitude  Float
   longitude Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  presence Presence[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  presence  Presence[]
 }
-
-
-
 
 enum Role {
   ADMIN

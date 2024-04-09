@@ -1,111 +1,43 @@
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+import Map from './Map';
+// import Geo from './Geo';
+import Pointage from './Pointage';
 
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
-import sortie from '../assets/sortie.jpeg'
-import entre from '../assets/Entre.jpg'
-import { useState } from "react";
-import Geo from "./Geo.jsx"
-import UserAvatar from 'react-native-user-avatar';
-import romaine from '../assets/romaine.png';
-import Profil from './Profil.jsx'
+const Tab = createBottomTabNavigator();
 
-
-export default function Pointage() {
-    const [isPress, setIsPress] = useState(false);
-
-    const handlePress = (navigation) => {
-
-     
-        navigation.navigate('Profil')
-    }
-
+const App = () => {
     return (
-        <View style={styles.container}>
-            <View style={styles.text}>
-                <View>
-                    <Text style={styles.text}>Heure: {new Date().toLocaleTimeString()}</Text>
-                    <Text style={styles.text}>Horaire du jour || 08H00 - 15H30</Text>
-                    <Profil/>
-                </View>
-
-                <View><Profil /></View>
-
-            </View>
-
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={() => setIsPress(true)} style={styles.button}>
-                    <Image source={entre} style={styles.image} />
-                    <Text style={styles.buttonText}> Entre</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setIsPress(false)} style={styles.button}>
-                    <Image source={sortie} style={styles.image} />
-                    <Text style={styles.buttonText}> Sortie</Text>
-
-                </TouchableOpacity>
-            </View>
-            <View style={styles.buttonText}>
-                {isPress ?
-                    <Text style={styles.buttonText}>Heure d'arrivée : {new Date().toLocaleTimeString()} </Text>
-                    :
-                    <Text style={styles.buttonText}>Heure de sortie : {new Date().toLocaleTimeString()} </Text>
-                }
-                <Geo />
-            </View>
-        </View>
+        <Stack.Navigator>
+            <Tab.Navigator>
+                <Tab.Screen
+                    name="Map"
+                    component={Map}
+                    options={{
+                        headerShown: false,
+                        tabBarLabel: 'Map',
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialIcons name="map" color={color} size={size} />
+                        ),
+                    }}
+                />
+                <Tab.Screen
+                    name="Pointage"
+                    component={Pointage}
+                    options={{
+                        headerShown: false,
+                        tabBarLabel: 'Pointage',
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialIcons onPress={() => navigation.navigate('Pointage')} name="home" color={color} size={size} />
+                        ),
+                    }}
+                />
+            </Tab.Navigator>
+        </Stack.Navigator>
+       
     );
-}
+};
 
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'white',
-        marginTop: 20,
-        padding: 10,
-        height: 100,
-    },
-    text: {
-
-        flexDirection: "row",
-        backgroundColor: "#63b3ed",
-        color: "#484E58",
-        marginLeft: 6,
-        marginBottom: 2,
-        padding: 10,
-        paddingTop:15,
-        marginTop:10,
-        borderRadius: 15,
-        fontSize:20,
-
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 30,
-        marginLeft: 6,
-    },
-    button: {
-        // flexDirection: 'row',
-        alignItems: 'center',
-        // borderWidth: 2,
-        padding: 10,
-    },
-    image: {
-        width: 100,
-        height: 100,
-    },
-    buttonText: {
-        color: '#484E58',
-        marginLeft: 6,
-        fontSize: 20,
-        marginTop: 10,
-    },
-    UserAvatar: {
-        width: 30,
-        borderRadius: 50,
-        marginTop: 10,
-        marginLeft: 15,
-
-
-    },
-});
-
-
-
+export default App;

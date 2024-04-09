@@ -1,9 +1,8 @@
 // import * as  ImagePicker from 'expo-image-picker'
 import { useState } from 'react';
 import { View, TouchableOpacity,StyleSheet } from 'react-native';
-import UserAvatar from 'react-native-user-avatar';
+import Click from './Click';
 // import ImageViewer from './ImageViewer';
-import Bouton from './Bouton';
 
 export default function Profil() {
     const [selectionImage, setSelectionImage] = useState(null);
@@ -31,11 +30,11 @@ export default function Profil() {
 
     return (
 
-        <TouchableOpacity onPress={pickImageAsync} style={styles.touchableOpacity}>
-            <View></View>
-            {selectionImage && <UserAvatar style={styles.userAvatar} source={{ uri: selectionImage }} />}
-        </TouchableOpacity>
-
+        
+            <View>
+                <Click styles={styles.touchableOpacity} onPress={pickImageAsync}   name='selectionImage'/>
+            </View>
+           
     )
 }
 const styles = StyleSheet.create({

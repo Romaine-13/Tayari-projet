@@ -5,7 +5,7 @@ import * as Location from 'expo-location';
 export default function Geo() {
     const [location, setLocation] = useState(null);
     const [address, setAddress] = useState(null);
-    const [currentDate, setCurrentDate] = useState(null);
+  
 
     useEffect(() => {
         (async () => {
@@ -26,7 +26,12 @@ export default function Geo() {
                 setAddress(geocode[0].name);
             }
 
-            
+            const preciseAddress = 'de laliberation kadea academy';
+            if (address === preciseAddress) {
+                console.log('L\'appareil est à l\'adresse précise');
+                // Effectuer les actions nécessaires lorsque l'appareil est à l'adresse précise
+                
+            }
         })();
     }, []);
 
@@ -35,13 +40,12 @@ export default function Geo() {
             <Text >Latitude: {location ? location.coords.latitude : 'Loading...'}</Text>
             <Text >Longitude: {location ? location.coords.longitude : 'Loading...'}</Text>
             <Text >Adresse: {address || 'Loading...'}</Text>
-        
+
+          
         </View>
     );
-
-
-
 }
+
 const styles = StyleSheet.create({
     buttonText: {
         color: '#484E58',

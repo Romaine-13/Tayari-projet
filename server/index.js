@@ -4,7 +4,7 @@ const userRouter = require('./src/Routes/UserRoute.js');
 const presenceRouter = require('./src/Routes/PresenceRoute');
 const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 
 
 
@@ -19,6 +19,6 @@ app.use("/", presenceRouter);
 
 
 
-app.listen(PORT, () => {
+app.listen(PORT, '192.168.60.211', () => {
   console.log(`Server is running on port ${PORT}`);
 });

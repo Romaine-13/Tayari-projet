@@ -36,7 +36,7 @@ const prisma   = new PrismaClient();
 const geolib = require('geolib');
 
 const companyLocation = { latitude: 48.8566, longitude: 2.3522 };
-const maxDistance = 1000; // Distance maximale acceptable en mètres
+const maxDistance = 5; // Distance maximale acceptable en mètres
 
 const location = async (latitude, longitude) => {
   const latitudeFloat = parseFloat(latitude);
